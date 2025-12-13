@@ -1,0 +1,113 @@
+<div class="row justify-content-center">
+  <div class="col-8 col-md-6 col-lg-5">
+    <div class="container border rounded p-4 m-3 bg-light">
+      <h3 class="text-center mb-4">Register</h3>
+      {{#if error}}
+        <div class="alert alert-danger" role="alert">
+          {{error}} </div>
+      {{/if}}
+      
+      <form method="POST" action="/users/register" id="signupForm">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="inputFirstName" class="form-label">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputFirstName"
+              name="first_name"
+              required
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="inputLastName" class="form-label">Apellido</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputLastName"
+              name="last_name"
+              required
+            />
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label for="inputEmail" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="inputEmail"
+            name="email"
+            required
+          />
+        </div>
+        
+        <div class="mb-3">
+          <label for="inputPassword" class="form-label">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            id="inputPassword"
+            name="password"
+            required
+          />
+        </div>
+        
+        <div class="mb-3">
+          <label for="inputAge" class="form-label">Edad (Opcional)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="inputAge"
+            value=0
+            step=1
+            min=0
+            name="age"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-success w-100 mt-3"
+          id="submitButton"
+          disabled
+        >Registrarse</button>
+      </form>
+
+      <div class="text-center mt-3">
+        <p class="mb-0">¿Ya tienes una cuenta?</p>
+        <a href="/login">Iniciar Sesión aquí</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Script de validación para habilitar/deshabilitar el botón
+  const form = document.getElementById('signupForm');
+  const inputs = form.querySelectorAll('input[required]'); 
+  const submitButton = document.getElementById('submitButton');
+
+  function checkFormValidity() {
+    let allRequiredFilled = true;
+    
+    // Itera sobre todos los campos requeridos y verifica si tienen valor
+    inputs.forEach(input => {
+      if (input.value.trim() === '') {
+        allRequiredFilled = false;
+      }
+    });
+
+    // Habilita el botón solo si todos los campos requeridos están llenos
+    submitButton.disabled = !allRequiredFilled;
+  }
+
+  // Agrega un listener a cada campo para verificar la validez al escribir
+  inputs.forEach(input => {
+    input.addEventListener('input', checkFormValidity);
+  });
+
+  // Verifica la validez al cargar la página (útil si hay valores precargados)
+  window.addEventListener('load', checkFormValidity);
+</script>

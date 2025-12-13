@@ -1,0 +1,9 @@
+.console {
+  margin-top: 20px;
+  background-color: rgb(29, 29, 59);
+}
+.console pre {
+  font-size: 10px;
+  font-weight: bold;
+  color: #4cafa2;
+}

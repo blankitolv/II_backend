@@ -1,0 +1,79 @@
+<div class="row justify-content-center">
+  <div class="col-6">
+    <div class="container border rounded p-3 m-3">
+      <p class="fs-3">Login</p>
+      <form method="POST" action="api/sessions/login">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="inputEmail"
+            aria-describedby="emailHelp"
+            name="email"
+          />
+        </div>
+        <div class="mb-3">
+          <label
+            for="exampleInputPassword1"
+            class="form-label"
+            required
+          >Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="inputPassword"
+            name="password"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-success w-100 mt-3"
+          id="submitButton"
+          disabled
+        >Entrar</button>
+        <div class="container p-2 m-2">
+          {{#if error}}
+            <div class="alert alert-danger" role="alert">
+              No se pudo iniciar sesión
+              <pre>{{error}}</pre>
+            </div>
+            <img src="/assets/img/cry-crying.gif" width="100">
+          {{/if}}
+
+        </div>
+      </form>
+        <div class="text-center mt-3">
+          <p class="mb-0">¿No tienes una cuenta?</p>
+          <a href="/register">registrate aquí</a>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const emailInput = document.getElementById('inputEmail'); 
+  const passwordInput = document.getElementById('inputPassword'); 
+  const submitButton = document.getElementById('submitButton');
+
+  function checkInputs() { 
+    const emailValue = emailInput.value.trim(); 
+    const passwordValue = passwordInput.value.trim();
+    // se asigna a isFormValid el CONTRARIO de > si (email tiene algo) && (password tiene algo)
+    // se asigna el contrario porque es más facil la asignación a `submitButton.disabled`
+    const isFormValid = !(emailValue.length > 0 && passwordValue.length > 0);
+    submitButton.disabled = isFormValid
+  }
+  /*
+  genero un evento, cada vez que teclea algo el evento input lanza @checkInputs
+  valida si debe o no habilitar el
+  botón de enviar el formulario
+  */
+  emailInput.addEventListener('input', checkInputs);
+  passwordInput.addEventListener('input', checkInputs);
+
+  // esperamos el evento "load" para ejecutar por primera vez @checkInputs
+  window.addEventListener('load', checkInputs);
+</script>
