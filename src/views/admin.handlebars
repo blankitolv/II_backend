@@ -1,0 +1,16 @@
+<div class="container mt-4">
+  <p class="h4">Admin Dashboard <span class="fs-6">({{user.first_name}} {{user.last_name}})</span></p>
+  <p class="d-inline-flex gap-1">
+    <a class="btn btn-outline-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      🐛
+    </a>
+  </p>
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+      {{ dump user}}
+    </div>
+  </div>
+  <div class="mt-4">
+    {{> create_product}}
+  </div>
+</div>

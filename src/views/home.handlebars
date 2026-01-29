@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row p-2 m-2">
+    {{#each productos}}
+      <div class="card col-3 m-2" id="{{this.id}}" style="width: 18rem;">
+        <img src="./assets/img/ph.jpg" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{this.title}}</h5>
+          <p> ID: {{this.id}} </p>
+          <p> CODE: {{this.code}} </p>
+          <p> STOCK: {{this.stock}} </p>
+          <p> CATEGORY: {{this.category}} </p>
+          <p class="card-text">{{this.description}}</p>
+          <button class="delete-button btn btn-danger" data-id="{{this.id}}">
+            Eliminar
+          </button>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
+<script src="/home.js"></script>
+

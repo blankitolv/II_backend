@@ -39,41 +39,23 @@
               No se pudo iniciar sesión
               <pre>{{error}}</pre>
             </div>
-            <img src="/assets/img/cry-crying.gif" width="100">
+            <img src="/assets/img/cry-crying.gif" width="100" />
           {{/if}}
-
         </div>
       </form>
-        <div class="text-center mt-3">
-          <p class="mb-0">¿No tienes una cuenta?</p>
-          <a href="/register">registrate aquí</a>
-        </div>
+      <div class="text-center mt-3">
+        <p class="mb-0">¿No tienes una cuenta?</p>
+        <a href="/register">registrate aquí</a>
+      </div>
+      <div class="text-center mt-3">
+        <a href="/forgot-password">
+          olvidé mi contraseña
+          <i class="bi bi-emoji-neutral"></i>
+        </a>
+      </div>
     </div>
 
   </div>
 </div>
 
-<script>
-  const emailInput = document.getElementById('inputEmail'); 
-  const passwordInput = document.getElementById('inputPassword'); 
-  const submitButton = document.getElementById('submitButton');
-
-  function checkInputs() { 
-    const emailValue = emailInput.value.trim(); 
-    const passwordValue = passwordInput.value.trim();
-    // se asigna a isFormValid el CONTRARIO de > si (email tiene algo) && (password tiene algo)
-    // se asigna el contrario porque es más facil la asignación a `submitButton.disabled`
-    const isFormValid = !(emailValue.length > 0 && passwordValue.length > 0);
-    submitButton.disabled = isFormValid
-  }
-  /*
-  genero un evento, cada vez que teclea algo el evento input lanza @checkInputs
-  valida si debe o no habilitar el
-  botón de enviar el formulario
-  */
-  emailInput.addEventListener('input', checkInputs);
-  passwordInput.addEventListener('input', checkInputs);
-
-  // esperamos el evento "load" para ejecutar por primera vez @checkInputs
-  window.addEventListener('load', checkInputs);
-</script>
+<script src="/login.js"></script>

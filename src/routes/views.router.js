@@ -1,22 +1,76 @@
 import { Router } from "express";
-import User from "../models/users.models.js";
-import { passportCall, isLoggedIn } from "../middleware/passport.middleware.js";
+import {
+  passportCall,
+  isLoggedIn,
+  authorize,
+} from "../middleware/passport.middleware.js";
+import ProductService from "../services/products.service.js";
+import CartService from "../services/carts.service.js";
+import UserService from "../services/users.service.js";
+import jwt from "jsonwebtoken";
 
-const router = Router()
+const router = Router();
 
-router.get('/login', isLoggedIn, (req, res) => {
-    const error = req.query.error
-    res.render('login', {error})  
-})
+router.get("/forgot-password", (req, res) => {
+  res.render("forgot-password");
+});
 
-router.get('/register', (req, res) => {
-    const error = req.query.error
-    res.render('register', {error})
-})
+router.get("/reset-password/:token", (req, res) => {
+  const { token } = req.params;
+  try {
+    // Verify the token synchronously
+    jwt.verify(token, process.env.JWT_SECRET);
+    res.render("reset-password", { token });
+  } catch (error) {
+    // If token is invalid or expired
+    const msg = encodeURIComponent("Invalid or expired password reset link.");
+    return res.redirect(`/login?error=${msg}`);
+  }
+});
 
-router.get('/current', passportCall('jwt'), async (req, res) => {
-    const user = await User.findById(req.user.id).lean()
-    res.render('current', {user})
-})
+router.get("/login", isLoggedIn, (req, res) => {
+  const error = req.query.error;
+  res.render("login", { error });
+});
 
-export default router
+router.get("/register", (req, res) => {
+  const error = req.query.error;
+  res.render("register", { error });
+});
+
+router.get("/current", passportCall("jwt"), async (req, res) => {
+  const user = await UserService.findUserById(req.user.id);
+  res.render("current", { user });
+});
+
+router.get("/products", passportCall("jwt"), async (req, res) => {
+  const products = await ProductService.getAllProducts(req.query);
+  const user = await UserService.findUserById(req.user.id);
+  const error = req.query.error;
+  res.render("products", { products, user, error });
+});
+
+router.get("/cart", passportCall("jwt"), async (req, res) => {
+  console.log("AA");
+  const user = await UserService.findUserById(req.user.id);
+  console.log("BB");
+  console.log("USER: ", user);
+  let cart = await CartService.getCartById(user.cart);
+  console.log("CC");
+  console.log("CART: ", cart);
+  cart = cart.toObject();
+  console.log("DD");
+  res.render("cart", { cart });
+});
+
+router.get(
+  "/admin",
+  passportCall("jwt"),
+  authorize("admin"),
+  async (req, res) => {
+    const user = await UserService.findUserById(req.user.id);
+    res.render("admin", { user });
+  },
+);
+
+export default router;

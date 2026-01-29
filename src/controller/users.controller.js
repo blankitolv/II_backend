@@ -1,6 +1,7 @@
-import User from "../models/users.models.js";
-import bcrypt from "bcrypt";
+import UserService from "../services/users.service.js";
+// CartService is now imported dynamically below
 import { generateToken } from "../utils/jwt.utils.js";
+import bcrypt from "bcrypt";
 
 export async function loginUser(req, res) {
   const { email, password } = req.body;
@@ -12,56 +13,67 @@ export async function loginUser(req, res) {
     return res.redirect(`/login?error=${msg}`);
   }
 
-  const usuario_encontrado = await User.findOne({ email });
-  if (
-    !usuario_encontrado ||
-    !bcrypt.compareSync(password, usuario_encontrado.password)
-  ) {
+  const user = await UserService.findUserByEmail(email);
+  if (!user || !bcrypt.compareSync(password, user.password)) {
     const errorMessage =
       "error en el inicio de sesión, revisa tus credenciales";
     const msg = encodeURIComponent(errorMessage);
     return res.redirect(`/login?error=${msg}`);
   }
 
-  const token = generateToken(usuario_encontrado);
+  const token = generateToken(user);
 
   res.cookie("currentUser", token, { signed: true, httpOnly: true });
   res.redirect("/current");
 }
 
 export async function registerUser(req, res) {
-  const { first_name, last_name, email, password, age } = req.body;
-  if (!first_name || !last_name || !email || !password) {
-    const msg = encodeURIComponent(
-      "No se pudo realizar el registro, valide su datos [code:1]"
-    );
+  try {
+    // 1. Dynamically import CartService to break the circular dependency
+    const CartService = (await import("../services/carts.service.js")).default;
+    
+    // 2. Create the cart first
+    const newCart = await CartService.createCart();
 
+    // 3. Add cart ID to user data and register the user
+    const userData = { ...req.body, cartId: newCart._id };
+    const userCreated = await UserService.registerUser(userData);
+
+
+    const token = generateToken(userCreated);
+    res.cookie("currentUser", token, { signed: true, httpOnly: true });
+    res.redirect("/current");
+  } catch (error) {
+    console.error("Registration error:", error);
+    const msg = encodeURIComponent(
+      error.message || "An error occurred during registration.",
+    );
     return res.redirect(`/register?error=${msg}`);
   }
+}
 
-  const hashedPass = bcrypt.hashSync(password, 10);
-
-  const usuario_encontrado = await User.findOne({ email });
-  if (usuario_encontrado) {
-    const msg = encodeURIComponent(
-      "No se pudo realizar el registro, valide su datos [code:2]"
-    );
-    return res.redirect(`/login?error=${msg}`);
+export async function handleForgotPassword(req, res) {
+  const { email } = req.body;
+  try {
+    await UserService.sendPasswordResetLink(email);
+    const msg = encodeURIComponent("If an account with that email exists, a password reset link has been sent.");
+    res.redirect(`/login?error=${msg}`);
+  } catch (error) {
+    const msg = encodeURIComponent("An error occurred. Please try again.");
+    res.redirect(`/forgot-password?error=${msg}`);
   }
+}
 
-  const newUser = {
-    first_name,
-    last_name,
-    email,
-    password: hashedPass,
-    age,
-  };
-
-  const userCreated = await User.create(newUser);
-
-  const token = generateToken(userCreated);
-
-  res.cookie("currentUser", token, { signed: true, httpOnly: true });
-
-  res.redirect("/current");
+export async function handleResetPassword(req, res) {
+  const { token, password } = req.body;
+  try {
+    await UserService.resetPassword(token, password);
+    const msg = encodeURIComponent("Your password has been reset successfully. Please log in.");
+    res.redirect(`/login?error=${msg}`);
+  }
+  catch (error) {
+    const msg = encodeURIComponent(error.message || "An error occurred. Please try again.");
+    // Redirect back to the reset form with the token
+    res.redirect(`/reset-password/${token}?error=${msg}`);
+  }
 }

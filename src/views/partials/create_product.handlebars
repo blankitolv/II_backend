@@ -1,0 +1,99 @@
+{{! 
+      genero un codigo parcial para ser implementado en la vista
+ }}
+<div class="container">
+  <div class="row justify-content-center">
+    <h2>Create a New Product</h2>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-lg-8 col-xl-6 col-xs-12">
+      <div class="container">
+        <form
+          method="POST"
+          action="/api/products"
+          enctype="multipart/form-data"
+          class="m-3"
+          id="form_create_product"
+        >
+          <div class="mb-2">
+            <label for="title" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              placeholder="title"
+            />
+          </div>
+          <div class="input-group mb-2">
+            <textarea
+              class="form-control"
+              id="description"
+              name="description"
+              style="resize:none;"
+              rows="10"
+              aria-label="With textarea"
+              placeholder="description"
+            ></textarea>
+          </div>
+          <div class="mb-2">
+            <label for="code_new_product" class="form-label">Code </label>
+            <input
+              type="text"
+              class="form-control"
+              id="code"
+              name="code"
+              placeholder="77978785"
+            />
+          </div>
+          <div class="mb-2 input-group">
+            <label for="price" class="form-label">Price </label>
+            <div class="input-group flex-nowrap">
+              <span class="input-group-text">$</span>
+              <input
+                type="number"
+                class="form-control"
+                placeholder="445.00"
+                id="price"
+                name="price"
+                aria-label="movie price"
+                aria-describedby="price"
+              />
+            </div>
+          </div>
+          <div class="mb-2">
+            <label for="stock" class="form-label">Stock </label>
+            <input
+              type="number"
+              class="form-control"
+              id="stock"
+              name="stock"
+              placeholder="150"
+            />
+          </div>
+          <div class="mb-2">
+            <label for="category" class="form-label">Category </label>
+            <input
+              type="text"
+              class="form-control"
+              id="category"
+              name="category"
+              placeholder="Ciencia Ficción"
+            />
+          </div>
+          <div class="mb-2">
+            <label for="thumbnails" class="form-label">Images</label>
+            <input
+              type="file"
+              class="form-control"
+              id="thumbnails"
+              name="thumbnails"
+              multiple
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Crear</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

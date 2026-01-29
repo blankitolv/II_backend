@@ -1,0 +1,64 @@
+[
+  [
+    {
+      "title": "Baby Yoda",
+      "description": "Característica\tDetalle\nCompatibilidad\tSwitches con anclaje tipo cruz: Cherry MX, Outemu, Kailh y similares\nMedidas\t18 mm × 18 mm (formato estándar 1u)\nTerminación\tBarniz protector de alta calidad\nFabricación\tDiseño artesanal, hecho a mano",
+      "code": "yoda-001",
+      "price": 8900,
+      "status": true,
+      "stock": 20,
+      "category": "keycaps",
+      "thumbnails": ["/assets/img/products/BabyYoda.webp"]
+    },
+    {
+      "title": "Batman",
+      "description": "Característica\tDetalle\nCompatibilidad\tSwitches con anclaje tipo cruz: Cherry MX, Outemu, Kailh y similares\nMedidas\t18 mm × 18 mm (formato estándar 1u)\nTerminación\tBarniz protector de alta calidad\nFabricación\tDiseño artesanal, hecho a mano",
+      "code": "batman-001",
+      "price": 8900,
+      "status": true,
+      "stock": 20,
+      "category": "keycaps",
+      "thumbnails": ["/assets/img/products/batman.webp"]
+    },
+    {
+      "title": "Evangelion 01",
+      "description": "Característica\tDetalle\nCompatibilidad\tSwitches con anclaje tipo cruz: Cherry MX, Outemu, Kailh y similares\nMedidas\t18 mm × 18 mm (formato estándar 1u)\nTerminación\tBarniz protector de alta calidad\nFabricación\tDiseño artesanal, hecho a mano",
+      "code": "evangelion-001",
+      "price": 8900,
+      "status": true,
+      "stock": 20,
+      "category": "keycaps",
+      "thumbnails": ["/assets/img/products/evangelion-01.webp"]
+    },
+    {
+      "title": "Hollow Knight XL Size",
+      "description": "Característica\tDetalle\nCompatibilidad\tSwitches con anclaje tipo cruz: Cherry MX, Outemu, Kailh y similares\nMedidas\t18 mm × 18 mm (formato estándar 1u)\nTerminación\tBarniz protector de alta calidad\nFabricación\tDiseño artesanal, hecho a mano",
+      "code": "hollow-knight-xl-001",
+      "price": 8900,
+      "status": true,
+      "stock": 20,
+      "category": "keycaps",
+      "thumbnails": ["/assets/img/products/HollowKnightXLSize.webp"]
+    },
+    {
+      "title": "Sailor Moon",
+      "description": "Característica\tDetalle\nCompatibilidad\tSwitches con anclaje tipo cruz: Cherry MX, Outemu, Kailh y similares\nMedidas\t18 mm × 18 mm (formato estándar 1u)\nTerminación\tBarniz protector de alta calidad\nFabricación\tDiseño artesanal, hecho a mano",
+      "code": "sailor-moon-001",
+      "price": 8900,
+      "status": true,
+      "stock": 20,
+      "category": "keycaps",
+      "thumbnails": ["/assets/img/products/sailor-moon.webp"]
+    },
+    {
+      "title": "Shenlong",
+      "description": "Característica\tDetalle\nCompatibilidad\tSwitches con anclaje tipo cruz: Cherry MX, Outemu, Kailh y similares\nMedidas\t18 mm × 18 mm (formato estándar 1u)\nTerminación\tBarniz protector de alta calidad\nFabricación\tDiseño artesanal, hecho a mano",
+      "code": "shenlong-001",
+      "price": 8900,
+      "status": true,
+      "stock": 20,
+      "category": "keycaps",
+      "thumbnails": ["/assets/img/products/Shenlong.webp"]
+    }
+  ]
+]

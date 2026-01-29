@@ -1,32 +1,8 @@
-<div class="container">
-  <p class="d-inline-flex gap-1">
-    <a
-      class="btn btn-light"
-      data-bs-toggle="collapse"
-      href="#collapseExample"
-      role="button"
-      aria-expanded="false"
-      aria-controls="collapseExample"
-    >
-      Raw current
-    </a>
-  </p>
-  <div class="collapse" id="collapseExample">
-    <div class="card card-body">
-      <div class="console">
-        <pre>
-          {{dump this}}
-        </pre>
-      </div>
-    </div>
-  </div>
-  <div class="card" style="width: 18rem;">
-    <img src="https://placedog.net/200/200" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h5 class="card-title">{{user.email}}</h5>
-      <p class="card-text">{{user.first_name}} {{user.last_name}}</p>
-      <p>ROLE: {{user.role}}</p>
-      <a href="/api/sessions/logout" class="btn btn-primary">logout</a>
-    </div>
-  </div>
+<div class="container mt-4">
+  {{> dump_partial id="debug-user" context=user}}
+  <h1>Your Profile</h1>
+  <p><strong>Email:</strong> {{user.email}}</p>
+  <p><strong>First Name:</strong> {{user.first_name}}</p>
+  <p><strong>Last Name:</strong> {{user.last_name}}</p>
+  <p><strong>Role:</strong> {{user.role}}</p>
 </div>

@@ -1,0 +1,28 @@
+{{! prettier-ignore-file }}
+<div class="container mt-4" data-cart-id="{{cart._id}}">
+  <h1>Your Cart</h1>
+  <div class="container">
+    {{> dump_partial id="debug-cart" context=cart}}
+  </div>
+  {{#if cart.products.length}}
+    <ul class="list-group">
+      {{#each cart.products}}
+        <li class="list-group-item" data-product-container="{{this.product._id}}">
+          <h5>{{this.product.title}}</h5>
+          <label>
+            Quantity 
+            <input type="number" class="quantity-input" min="1" max="{{this.product.stock}}" value="{{this.quantity}}" data-product-id="{{this.product._id}}">
+          </label>
+          <p>Stock: {{this.product.stock}}</p>
+          <p>Price: ${{this.product.price}}</p>
+          <i class="bi bi-x btn btn-outline-danger delete-product-button" data-product-id="{{this.product._id}}"></i>
+        </li>
+      {{/each}}
+    </ul>
+    <button class="btn btn-success mt-3" id="purchase-button">Purchase</button>
+    {{else}}
+      <p>Your cart is empty.</p>
+    {{/if}}
+  </div>
+  <script src="/cart.js"></script>
+  

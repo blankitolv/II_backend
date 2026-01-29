@@ -3,10 +3,16 @@
     <meta charset="UTF-8" />
     <title>{{title}}</title>
     <link rel="stylesheet" href="/styles/styles.css" />
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.min.css" />
   </head>
   <body class="bg-light">
-    {{{body}}}
-    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    {{> navbar}}
+    <main class="container">
+      {{{body}}}
+    </main>
+    <script src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
