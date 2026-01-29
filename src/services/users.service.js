@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../services/mailing.service.js";
 
-class UserService {
+export default class UserService {
   constructor() {
     this.userRepository = UserRepository;
   }
@@ -18,6 +18,8 @@ class UserService {
 
   async registerUser(userData) {
     const { first_name, last_name, email, password, age, cartId } = userData;
+    console.log("---", userData);
+
     if (!first_name || !last_name || !email || !password || !cartId) {
       throw new Error("Missing required fields for registration");
     }
@@ -45,12 +47,10 @@ class UserService {
         email,
         "Bienvenido a Nuestro Ecommerce",
         `<h1>¡Bienvenido, ${first_name}!</h1>
-         <p>Gracias por registrarte en nuestro ecommerce. Esperamos que disfrutes de tu experiencia de compra.</p>`
+         <p>Gracias por registrarte en nuestro ecommerce. Esperamos que disfrutes de tu experiencia de compra.</p>`,
       );
     }
 
     return createdUser;
   }
 }
-
-export default new UserService();

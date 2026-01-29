@@ -2,7 +2,7 @@
   <div class="col-6">
     <div class="container border rounded p-3 m-3">
       <p class="fs-3">Login</p>
-      <form method="POST" action="api/sessions/login">
+      <form id="loginForm">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email</label>
           <input
@@ -34,13 +34,13 @@
           disabled
         >Entrar</button>
         <div class="container p-2 m-2">
-          {{#if error}}
-            <div class="alert alert-danger" role="alert">
-              No se pudo iniciar sesión
-              <pre>{{error}}</pre>
-            </div>
-            <img src="/assets/img/cry-crying.gif" width="100" />
-          {{/if}}
+      {{#if error}}
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+      {{else}}
+        <div class="alert alert-danger" role="alert" style="display: none;"></div>
+      {{/if}}
         </div>
       </form>
       <div class="text-center mt-3">

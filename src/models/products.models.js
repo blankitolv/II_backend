@@ -13,7 +13,6 @@ const productSchema = new mongoose.Schema({
 });
 
 productSchema.methods.validate_quantity_stock = function (quantity_to_buy) {
-  console.log("STOCK: ", this.stock, " QUANTITY: ", quantity_to_buy);
   return this.stock >= quantity_to_buy;
 };
 

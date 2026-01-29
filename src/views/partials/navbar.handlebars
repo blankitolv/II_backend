@@ -1,7 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">E-commerce</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <p class="fs-4 navbar-brand" href="/" id="brand-logo">E-commerce</p>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
@@ -9,9 +17,11 @@
         <li class="nav-item">
           <a class="nav-link" href="/products">Products</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/cart">Cart</a>
-        </li>
+        {{#if (eq user.role "user")}}
+          <li class="nav-item">
+            <a class="nav-link" href="/cart">Cart</a>
+          </li>
+        {{/if}}
         {{#if user}}
           <li class="nav-item">
             <a class="nav-link" href="/current">Profile</a>
@@ -22,7 +32,7 @@
             </li>
           {{/if}}
           <li class="nav-item">
-            <a class="nav-link" href="/api/sessions/logout">Logout</a>
+            <a class="nav-link" href="#" id="logout-link">Logout</a>
           </li>
         {{else}}
           <li class="nav-item">

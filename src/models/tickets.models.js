@@ -5,7 +5,11 @@ const ticketSchema = new mongoose.Schema(
   {
     order_number: { type: String, unique: true, default: () => uuidv4() },
     amount: { type: Number, required: true },
-    purchaser: { type: String, required: true },
+    purchaser: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users", // Assuming your User model is named 'users'
+      required: true,
+    },
     status: { type: String, default: "generada" },
     items: [
       {

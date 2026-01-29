@@ -1,6 +1,6 @@
 import ProductRepository from "../repository/products.repository.js";
 
-class ProductService {
+export default class ProductService {
   constructor() {
     this.productRepository = ProductRepository;
   }
@@ -14,6 +14,12 @@ class ProductService {
   }
 
   async createProduct(product) {
+    const productExists = await this.productRepository.findProductByCode(
+      product.code,
+    );
+    if (productExists) {
+      throw new Error(`Product with code '${product.code}' already exists.`);
+    }
     return await this.productRepository.createProduct(product);
   }
 
@@ -26,4 +32,4 @@ class ProductService {
   }
 }
 
-export default new ProductService();
+

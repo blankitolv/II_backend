@@ -4,9 +4,11 @@ import {
   isLoggedIn,
   authorize,
 } from "../middleware/passport.middleware.js";
-import ProductService from "../services/products.service.js";
-import CartService from "../services/carts.service.js";
-import UserService from "../services/users.service.js";
+import { productService, cartService, userService } from "../services/index.js";
+
+// import ProductService from "../services/products.service.js";
+// import CartService from "../services/carts.service.js";
+// import UserService from "../services/users.service.js";
 import jwt from "jsonwebtoken";
 
 const router = Router();
@@ -39,28 +41,22 @@ router.get("/register", (req, res) => {
 });
 
 router.get("/current", passportCall("jwt"), async (req, res) => {
-  const user = await UserService.findUserById(req.user.id);
+  const user = await userService.findUserById(req.user.id);
   res.render("current", { user });
 });
 
 router.get("/products", passportCall("jwt"), async (req, res) => {
-  const products = await ProductService.getAllProducts(req.query);
-  const user = await UserService.findUserById(req.user.id);
+  const products = await productService.getAllProducts(req.query);
+  const user = await userService.findUserById(req.user.id);
   const error = req.query.error;
   res.render("products", { products, user, error });
 });
 
 router.get("/cart", passportCall("jwt"), async (req, res) => {
-  console.log("AA");
-  const user = await UserService.findUserById(req.user.id);
-  console.log("BB");
-  console.log("USER: ", user);
-  let cart = await CartService.getCartById(user.cart);
-  console.log("CC");
-  console.log("CART: ", cart);
+  const user = await userService.findUserById(req.user.id);
+  let cart = await cartService.getCartById(user.cart);
   cart = cart.toObject();
-  console.log("DD");
-  res.render("cart", { cart });
+  res.render("cart", { cart, user });
 });
 
 router.get(
@@ -68,7 +64,7 @@ router.get(
   passportCall("jwt"),
   authorize("admin"),
   async (req, res) => {
-    const user = await UserService.findUserById(req.user.id);
+    const user = await userService.findUserById(req.user.id);
     res.render("admin", { user });
   },
 );

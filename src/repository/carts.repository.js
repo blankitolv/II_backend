@@ -10,22 +10,15 @@ class CartRepository {
   }
 
   async addProductToCart(cartId, productId, quantity) {
-    console.log("j1");
     const cart = await this.getCartById(cartId);
-    console.log("j2");
     const productIndex = cart.products.findIndex(
       (p) => p.product._id.toString() === productId,
     );
-
-    console.log("j3");
     if (productIndex > -1) {
-      console.log("j4");
       cart.products[productIndex].quantity += quantity;
     } else {
-      console.log("j5");
       cart.products.push({ product: productId, quantity });
     }
-    console.log("j6");
     return await cart.save();
   }
 
@@ -43,23 +36,22 @@ class CartRepository {
     return await cart.save();
   }
 
+  // [repository] actualiza la cantidad de un producto existente en el carrito, retorna null si el producto no está en el carrito
   async updateProductQuantity(cartId, productId, quantity) {
-    console.log("UPC1");
     const cart = await this.getCartById(cartId);
-    console.log("UPC2");
     const productIndex = cart.products.findIndex(
       (p) => p.product._id.toString() === productId,
     );
 
-    console.log("UPC3");
     if (productIndex > -1) {
-      console.log("UPC4");
       cart.products[productIndex].quantity = quantity;
+      return await cart.save();
     }
-    console.log("UPC5");
-    return await cart.save();
+
+    return null;
   }
 
+  // [repository] vacía el carrito de compras
   async clearCart(cartId) {
     const cart = await this.getCartById(cartId);
     cart.products = [];

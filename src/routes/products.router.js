@@ -6,13 +6,25 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controller/products.controller.js";
+
+import { validateMongoId } from "../middleware/validation.middleware.js";
 import { passportCall, authorize } from "../middleware/passport.middleware.js";
 import { uploader } from "../utils/multer.utils.js";
 
 const router = Router();
 
+// ruta: obtiene todos los productos o un subconjunto basado en query params de usuario registrado
 router.get("/", passportCall("jwt"), getAllProducts);
-router.get("/:pid", passportCall("jwt"), getProductById);
+
+// ruta: obtiene un producto por su id
+router.get(
+  "/:pid",
+  passportCall("jwt"),
+  validateMongoId("pid"),
+  getProductById,
+);
+
+// ruta: crea un producto (solo admin)
 router.post(
   "/",
   passportCall("jwt"),
@@ -20,7 +32,17 @@ router.post(
   uploader.array("thumbnails"),
   createProduct,
 );
-router.put("/:pid", passportCall("jwt"), authorize("admin"), updateProduct);
-router.delete("/", passportCall("jwt"), authorize("admin"), deleteProduct);
+
+// ruta: actualiza un producto por su id (solo admin)
+router.put(
+  "/:pid",
+  passportCall("jwt"),
+  authorize("admin"),
+  validateMongoId("pid"),
+  updateProduct,
+);
+
+// ruta: elimina un producto por su id (solo admin), soft delete
+router.delete("/:pid", passportCall("jwt"), authorize("admin"), deleteProduct);
 
 export default router;

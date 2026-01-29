@@ -1,79 +1,97 @@
-import UserService from "../services/users.service.js";
-// CartService is now imported dynamically below
+import { userService, cartService } from "../services/index.js";
 import { generateToken } from "../utils/jwt.utils.js";
 import bcrypt from "bcrypt";
 
 export async function loginUser(req, res) {
   const { email, password } = req.body;
-
+  console.log("PASE");
   if (!email || !password) {
-    const errorMessage =
-      "error en el inicio de sesión, revisa tus credenciales";
-    const msg = encodeURIComponent(errorMessage);
-    return res.redirect(`/login?error=${msg}`);
+    return res
+      .status(400)
+      .json({ status: "error", message: "Email and password are required." });
   }
 
-  const user = await UserService.findUserByEmail(email);
-  if (!user || !bcrypt.compareSync(password, user.password)) {
-    const errorMessage =
-      "error en el inicio de sesión, revisa tus credenciales";
-    const msg = encodeURIComponent(errorMessage);
-    return res.redirect(`/login?error=${msg}`);
+  try {
+    const user = await userService.findUserByEmail(email);
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+      return res.status(401).json({
+        status: "error",
+        message: "Invalid credentials. Please check your email and password.",
+      });
+    }
+
+    const token = generateToken(user);
+    res.cookie("currentUser", token, { signed: true, httpOnly: true });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Login successful.",
+      redirect: "/current",
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    return res
+      .status(500)
+      .json({ status: "error", message: "An internal error occurred." });
   }
-
-  const token = generateToken(user);
-
-  res.cookie("currentUser", token, { signed: true, httpOnly: true });
-  res.redirect("/current");
 }
 
 export async function registerUser(req, res) {
   try {
-    // 1. Dynamically import CartService to break the circular dependency
-    const CartService = (await import("../services/carts.service.js")).default;
-    
-    // 2. Create the cart first
-    const newCart = await CartService.createCart();
-
-    // 3. Add cart ID to user data and register the user
+    const newCart = await cartService.createCart();
     const userData = { ...req.body, cartId: newCart._id };
-    const userCreated = await UserService.registerUser(userData);
 
-
+    const userCreated = await userService.registerUser(userData);
     const token = generateToken(userCreated);
+
     res.cookie("currentUser", token, { signed: true, httpOnly: true });
-    res.redirect("/current");
+
+    return res.status(201).json({
+      status: "success",
+      message: "User registered successfully.",
+      redirect: "/current",
+    });
   } catch (error) {
     console.error("Registration error:", error);
-    const msg = encodeURIComponent(
-      error.message || "An error occurred during registration.",
-    );
-    return res.redirect(`/register?error=${msg}`);
+    return res.status(400).json({
+      status: "error",
+      message: error.message || "An error occurred during registration.",
+    });
   }
 }
 
 export async function handleForgotPassword(req, res) {
   const { email } = req.body;
   try {
-    await UserService.sendPasswordResetLink(email);
-    const msg = encodeURIComponent("If an account with that email exists, a password reset link has been sent.");
-    res.redirect(`/login?error=${msg}`);
+    await userService.sendPasswordResetLink(email);
+    return res.status(200).json({
+      status: "success",
+      message:
+        "If an account with that email exists, a password reset link has been sent.",
+    });
   } catch (error) {
-    const msg = encodeURIComponent("An error occurred. Please try again.");
-    res.redirect(`/forgot-password?error=${msg}`);
+    console.error("Forgot password error:", error);
+    return res.status(500).json({
+      status: "error",
+      message: "An error occurred. Please try again.",
+    });
   }
 }
 
 export async function handleResetPassword(req, res) {
   const { token, password } = req.body;
   try {
-    await UserService.resetPassword(token, password);
-    const msg = encodeURIComponent("Your password has been reset successfully. Please log in.");
-    res.redirect(`/login?error=${msg}`);
-  }
-  catch (error) {
-    const msg = encodeURIComponent(error.message || "An error occurred. Please try again.");
-    // Redirect back to the reset form with the token
-    res.redirect(`/reset-password/${token}?error=${msg}`);
+    await userService.resetPassword(token, password);
+    return res.status(200).json({
+      status: "success",
+      message: "Your password has been reset successfully. Please log in.",
+      redirect: "/login",
+    });
+  } catch (error) {
+    console.error("Reset password error:", error);
+    return res.status(400).json({
+      status: "error",
+      message: error.message || "An error occurred. Please try again.",
+    });
   }
 }

@@ -1,19 +1,9 @@
-import CartService from "../services/carts.service.js";
+import { cartService } from "../services/index.js";
 
-// Controller to create a new cart
-export const createCart = async (req, res) => {
-  try {
-    const newCart = await CartService.createCart();
-    res.status(201).json(newCart);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Controller to get a cart by ID
+// [Controller] trae un carrito por id
 export const getCartById = async (req, res) => {
   try {
-    const cart = await CartService.getCartById(req.params.cid);
+    const cart = await cartService.getCartById(req.params.cid);
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
@@ -23,18 +13,13 @@ export const getCartById = async (req, res) => {
   }
 };
 
-// Controller to add a product to a cart
+// [Controller] agrega un producto al carrito
 export const addProductToCart = async (req, res) => {
-  console.log("LLEGUE");
   const { cid, pid } = req.params;
   const { quantity } = req.body;
 
-  console.log("LLEGUE2");
-  console.log("CARTID: ", cid);
-  console.log("PRODUCTID: ", pid);
-  console.log("QUANTITY: ", quantity);
   try {
-    const updatedCart = await CartService.addProductToCart(
+    const updatedCart = await cartService.addProductToCart(
       cid,
       pid,
       quantity || 1,
@@ -48,11 +33,10 @@ export const addProductToCart = async (req, res) => {
   }
 };
 
-console.log("LLEGUE4");
-// Controller to delete all products from a cart
+// [Controller] vacia un carrito de compras
 export const deleteCart = async (req, res) => {
   try {
-    const clearedCart = await CartService.clearCart(req.params.cid);
+    const clearedCart = await cartService.clearCart(req.params.cid);
     if (!clearedCart) {
       return res.status(404).json({ message: "Cart not found" });
     }
@@ -62,12 +46,12 @@ export const deleteCart = async (req, res) => {
   }
 };
 
-// Controller to delete a product from a cart
+// [Controller] elimina un producto del carrito
 export const deleteProductFromCart = async (req, res) => {
   const { cid, pid } = req.params;
 
   try {
-    const updatedCart = await CartService.deleteProductFromCart(cid, pid);
+    const updatedCart = await cartService.deleteProductFromCart(cid, pid);
     res
       .status(200)
       .json({ message: "Product removed from cart", cart: updatedCart });
@@ -76,54 +60,46 @@ export const deleteProductFromCart = async (req, res) => {
   }
 };
 
-// Controller to update a cart with an array of products
-export const updateCart = async (req, res) => {
-  const { cid } = req.params;
-  const { products } = req.body;
-
-  try {
-    const updatedCart = await CartService.updateCart(cid, products);
-    res.status(200).json({ message: "Cart updated", cart: updatedCart });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// Controller to update the quantity of a product in a cart
+// [Controller] actualiza la cantidad de un producto en el carrito
 export const updateProductQuantity = async (req, res) => {
-  console.log("CUPQ1");
   const { cid, pid } = req.params;
   const { quantity } = req.body;
 
-  console.log("CUPQ2");
   try {
-    const updatedCart = await CartService.updateProductQuantity(
+    const updatedCart = await cartService.updateProductQuantity(
       cid,
       pid,
       quantity,
     );
-    console.log("CUPQ3");
+
+    if (!updatedCart) {
+      return res.status(404).json({
+        status: "error",
+        message: "Product not found in cart. Cannot update quantity.",
+      });
+    }
+
     res
       .status(200)
       .json({ message: "Product quantity updated", cart: updatedCart });
   } catch (error) {
-    console.log("CUPQ4");
     if (error.message.includes("Insufficient stock")) {
       return res.status(400).json({ message: error.message });
     }
-    console.log("CUPQ5");
     res.status(500).json({ message: "Internal server error" });
   }
-  console.log("CUPQ6");
 };
 
+// [Controller] realiza la compra de un carrito
 export const purchaseCart = async (req, res) => {
   const { cid } = req.params;
-  const purchaserEmail = req.user.email; // Assuming req.user is populated by passportCall
+  const userId = req.user._id;
+  const purchaserEmail = req.user.email;
 
   try {
-    const { ticket, productsNotPurchased } = await CartService.purchaseCart(
+    const { ticket, productsNotPurchased } = await cartService.purchaseCart(
       cid,
+      userId,
       purchaserEmail,
     );
 

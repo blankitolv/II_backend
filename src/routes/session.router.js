@@ -16,19 +16,25 @@ router.post("/reset-password", handleResetPassword);
 router.post("/login", loginUser);
 
 // Current: valida el JWT y devuelve req.user con el DTO
-router.get("/current",passport.authenticate("jwt", { session: false }),
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userDTO = new UserDTO(req.user);
     res.json({
       status: "success",
       user: userDTO,
     });
-  }
+  },
 );
 
-router.get('/logout', (req, res) => {
-  res.clearCookie('currentUser');
-  res.redirect('/login');
+router.post("/logout", (req, res) => {
+  res.clearCookie("currentUser");
+  return res.status(200).json({
+    status: "success",
+    message: "Logout successful.",
+    redirect: "/login",
+  });
 });
 
 export default router;

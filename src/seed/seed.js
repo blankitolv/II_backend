@@ -1,16 +1,17 @@
-import UserModel from "../models/users.models.js";
-import ProductModel from "../models/products.models.js";
-import CartService from "../services/carts.service.js";
+// librerías de terceros
 import bcrypt from "bcrypt";
 import fs from "fs/promises";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import path from "path";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// librerías propias
+import UserModel from "../models/users.models.js";
+import ProductModel from "../models/products.models.js";
+import { cartService } from "../services/index.js";
+import { ROOT_PATH } from "../utils/utils.utils.js";
+import { consoleColors } from "../utils/utils.utils.js";
 
-const USERS_PATH = path.join(__dirname, "users.json");
-const PRODUCTS_PATH = path.join(__dirname, "products.json");
+const USERS_PATH = path.join(ROOT_PATH, "src", "seed", "users.json");
+const PRODUCTS_PATH = path.join(ROOT_PATH, "src", "seed", "products.json");
 
 export const seedDatabase = async () => {
   try {
@@ -18,31 +19,33 @@ export const seedDatabase = async () => {
     const productCount = await ProductModel.countDocuments();
 
     if (userCount > 0 && productCount > 0) {
-      console.log("Database already seeded. Skipping.");
+      consoleColors("verde", "✅ La base de datos ya está populada.");
       return;
     }
 
-    console.log("Database is empty. Seeding...");
+    consoleColors(
+      "amarillo",
+      "🚨 La base de datos está vacía. Iniciando el proceso de seed...",
+    );
 
-    // Seed Products
+    // productos básicos del sistema
     if (productCount === 0) {
       const productsData = await fs.readFile(PRODUCTS_PATH, "utf-8");
       const products = JSON.parse(productsData);
-      // The products are nested in an array
       if (products.length > 0 && Array.isArray(products[0])) {
         await ProductModel.insertMany(products[0]);
-        console.log(`${products[0].length} products have been added.`);
+        consoleColors("verde", `se agregaro ${products[0].length} productos.`);
       }
     }
 
-    // Seed Users
+    // usuarios básicos del sistema
     if (userCount === 0) {
       const usersData = await fs.readFile(USERS_PATH, "utf-8");
       const users = JSON.parse(usersData);
 
       const createdUsers = [];
       for (const user of users) {
-        const newCart = await CartService.createCart();
+        const newCart = await cartService.createCart();
         const hashedPassword = bcrypt.hashSync(user.password, 10);
 
         createdUsers.push({
@@ -50,12 +53,18 @@ export const seedDatabase = async () => {
           password: hashedPassword,
           cart: newCart._id,
         });
+        consoleColors(
+          "verde",
+          "🚀🚀🚀  [Creando usuarios] USER:",
+          user.email,
+          " - PASSWORD:",
+          user.password,
+        );
       }
 
       await UserModel.insertMany(createdUsers);
-      console.log(`${createdUsers.length} users have been added.`);
     }
   } catch (error) {
-    console.error("Error seeding the database:", error);
+    consoleColors("rojo", " 🚨🚨🚨  Error populando la base de datos:", error);
   }
 };

@@ -4,23 +4,27 @@ import handlebars from "express-handlebars";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import passport from "passport";
-import { BOOTSTRAPDIR, BOOTSTRAPICONDIR } from "./src/utils/utils.utils.js";
-import path from "path";
 import http from "http";
 import { Server } from "socket.io";
-import Sockets from "./src/socket/socket.js";
 
 // librerías propias
+import Sockets from "./src/socket/socket.js";
+import {
+  BOOTSTRAPDIR,
+  BOOTSTRAPICONDIR,
+  consoleColors,
+} from "./src/utils/utils.utils.js";
+import { connectMongo } from "./src/config/db.config.js";
+import initializePassport from "./src/config/passport.config.js";
+import { seedDatabase } from "./src/seed/seed.js";
+
+// routes
 import apiUsersRouter from "./src/routes/users.router.js";
 import viewsRouter from "./src/routes/views.router.js";
 import apiSessionsRouter from "./src/routes/session.router.js";
 import apiProductsRouter from "./src/routes/products.router.js";
 import apiCartsRouter from "./src/routes/carts.router.js";
-import { connectMongo } from "./src/config/db.config.js";
-import initializePassport from "./src/config/passport.config.js";
-import { seedDatabase } from "./src/seed/seed.js";
 
-// env
 dotenv.config();
 
 const app = express();
@@ -84,5 +88,5 @@ connectMongo()
     });
   })
   .catch((error) => {
-    console.error("No se pudo montar el servidor: ", error);
+    consoleColors("red", "Error al iniciar el servidor:", error);
   });
