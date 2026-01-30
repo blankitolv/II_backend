@@ -1,6 +1,6 @@
 import passport from "passport";
 import jwt from "passport-jwt";
-import UserModel from "../models/users.models.js"; // Asegúrate de que la ruta sea correcta
+import UserModel from "../models/users.models.js";
 
 const JWTStrategy = jwt.Strategy;
 const ExtractJWT = jwt.ExtractJwt;
