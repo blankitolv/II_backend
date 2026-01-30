@@ -5,7 +5,7 @@ class UserDTO {
     this.last_name = user.last_name;
     this.email = user.email;
     this.role = user.role;
-    this.cart = user.cart; // Ahora pasamos el objeto del carrito completo y poblado
+    this.cart = user.cart;
   }
 }
 

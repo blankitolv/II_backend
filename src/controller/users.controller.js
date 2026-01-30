@@ -95,3 +95,34 @@ export async function handleResetPassword(req, res) {
     });
   }
 }
+
+export async function updateUser(req, res) {
+  const { uid } = req.params;
+  const userData = req.body;
+
+  // Security check: un usuario normal solo puede actualizar su propio perfil
+  if (req.user.role !== "admin" && req.user.id !== uid) {
+    return res.status(403).json({
+      status: "error",
+      message: "Forbidden: You can only update your own profile.",
+    });
+  }
+
+  try {
+    const updatedUser = await userService.updateUser(uid, userData);
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "User not found." });
+    }
+
+    delete updatedUser.password;
+
+    return res.status(200).json({ status: "success", payload: updatedUser });
+  } catch (error) {
+    console.error("Update user error:", error);
+    return res
+      .status(500)
+      .json({ status: "error", message: "An internal error occurred." });
+  }
+}

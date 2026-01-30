@@ -46,11 +46,24 @@ export default class UserService {
       await sendEmail(
         email,
         "Bienvenido a Nuestro Ecommerce",
-        `<h1>¡Bienvenido, ${first_name}!</h1>
-         <p>Gracias por registrarte en nuestro ecommerce. Esperamos que disfrutes de tu experiencia de compra.</p>`,
+        `<h1>¡Bienvenido, ${first_name}!</h1> 
+        <p>Gracias por registrarte en nuestro ecommerce. Esperamos que disfrutes de tu experiencia de compra.</p>`,
       );
     }
 
     return createdUser;
+  }
+
+  async updateUser(id, userData) {
+    // Hashear la contraseña si se está actualizando
+    if (userData.password) {
+      userData.password = bcrypt.hashSync(userData.password, 10);
+    }
+
+    // Evitar que se actualicen campos protegidos
+    delete userData.role;
+    delete userData.cart;
+
+    return this.userRepository.updateUser(id, userData);
   }
 }
