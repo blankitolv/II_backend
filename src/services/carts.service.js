@@ -66,7 +66,7 @@ export default class CartService {
     if (itemsToPurchase.length > 0) {
       ticket = await TicketModel.create({
         amount: totalAmount,
-        purchaser: userId, // Corrected: Use userId here
+        purchaser: userId,
         items: itemsToPurchase,
       });
 
@@ -77,7 +77,7 @@ export default class CartService {
       );
       const templateSource = fs.readFileSync(templatePath, "utf8");
       const template = handlebars.compile(templateSource);
-      const html = template({ ticket: ticket.toObject() }); // Pass ticket as a plain object
+      const html = template({ ticket: ticket.toObject() });
 
       await this.mailingService.sendEmail(
         purchaserEmail,
