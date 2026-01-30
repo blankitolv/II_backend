@@ -14,7 +14,6 @@ import {
   BOOTSTRAPICONDIR,
   consoleColors,
   documentacionURL,
-  ROOT_PATH,
 } from "./src/utils/utils.utils.js";
 import { connectMongo } from "./src/config/db.config.js";
 import initializePassport from "./src/config/passport.config.js";
