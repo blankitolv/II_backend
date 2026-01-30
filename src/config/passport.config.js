@@ -23,16 +23,15 @@ const initializePassport = () => {
       },
       async (jwt_payload, done) => {
         try {
-          // Busca al usuario por el ID del payload y popula el carrito
-          const user = await UserModel.findById(jwt_payload.id).populate("cart").lean();
-          
+          // se solicita el carrito del usuario junto a los datos del mismo
+          const user = await UserModel.findById(jwt_payload.id)
+            .populate("cart")
+            .lean();
+
           if (!user) {
             return done(null, false, { message: "User not found." });
           }
-          
-          // El objeto de usuario completo (con carrito) estará disponible en req.user
           return done(null, user);
-
         } catch (error) {
           return done(error);
         }
