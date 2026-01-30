@@ -7,7 +7,7 @@ const ticketSchema = new mongoose.Schema(
     amount: { type: Number, required: true },
     purchaser: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users", // Assuming your User model is named 'users'
+      ref: "users",
       required: true,
     },
     status: { type: String, default: "generada" },
