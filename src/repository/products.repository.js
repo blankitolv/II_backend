@@ -51,7 +51,7 @@ class ProductRepository {
     return await ProductModel.findByIdAndUpdate(id, product, { new: true });
   }
 
-  // Soft delete: cambia el estado de status a false y retorna el producto actualizado
+  // [repository] Soft delete: cambia el estado de status a false de un producto y retorna lo retorna actualizado
   async deleteProduct(id) {
     return await ProductModel.findByIdAndUpdate(
       id,

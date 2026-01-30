@@ -1,14 +1,15 @@
 import CartModel from "../models/carts.models.js";
 
 class CartRepository {
+  // [repository] crea un carrito
   async createCart() {
     return await CartModel.create({ products: [] });
   }
-
+  // [repository] obtiene un carrito por su id
   async getCartById(id) {
     return await CartModel.findById(id).populate("products.product");
   }
-
+  // [repository] agrega un producto al carrito
   async addProductToCart(cartId, productId, quantity) {
     const cart = await this.getCartById(cartId);
     const productIndex = cart.products.findIndex(
@@ -22,6 +23,7 @@ class CartRepository {
     return await cart.save();
   }
 
+  // [repository] elimina un producto del carrito (hard delete)
   async deleteProductFromCart(cartId, productId) {
     const cart = await this.getCartById(cartId);
     cart.products = cart.products.filter(
@@ -30,6 +32,7 @@ class CartRepository {
     return await cart.save();
   }
 
+  // [repository] actualiza el carrito con una nueva lista de productos
   async updateCart(cartId, products) {
     const cart = await this.getCartById(cartId);
     cart.products = products;
