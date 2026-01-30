@@ -3,6 +3,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../services/mailing.service.js";
 
+import {
+  generatePasswordResetToken,
+  verifyPasswordResetToken,
+} from "../utils/jwt.utils.js";
+
 export default class UserService {
   constructor() {
     this.userRepository = UserRepository;
@@ -65,5 +70,47 @@ export default class UserService {
     delete userData.cart;
 
     return this.userRepository.updateUser(id, userData);
+  }
+
+  async sendPasswordResetLink(email) {
+    const user = await this.userRepository.findUserByEmail(email);
+    if (!user) {
+      // No revelamos si el usuario existe o no por seguridad
+      console.log(`Password reset requested for non-existent user: ${email}`);
+      return;
+    }
+
+    const token = generatePasswordResetToken(email);
+    const resetLink = `http://localhost:${process.env.PORT || 8080}/reset-password/${token}`;
+
+    const emailBody = `<h1>Restablecimiento de Contraseña</h1>
+      <p>Has solicitado restablecer tu contraseña. Haz clic en el siguiente enlace para continuar:</p>
+      <a href="${resetLink}">Restablecer Contraseña</a>
+      <p>Este enlace expirará en 1 hora.</p>`;
+
+    await sendEmail(email, "Restablecimiento de Contraseña", emailBody);
+  }
+
+  async resetPassword(token, newPassword) {
+    const decodedToken = verifyPasswordResetToken(token);
+    if (!decodedToken) {
+      throw new Error("Invalid or expired password reset token.");
+    }
+
+    const user = await this.userRepository.findUserByEmail(decodedToken.email);
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    // Verificar que la nueva contraseña no sea la misma que la anterior
+    if (bcrypt.compareSync(newPassword, user.password)) {
+      throw new Error("New password cannot be the same as the old password.");
+    }
+
+    // Hashear y actualizar la nueva contraseña
+    const hashedPassword = bcrypt.hashSync(newPassword, 10);
+    await this.userRepository.updateUser(user._id, {
+      password: hashedPassword,
+    });
   }
 }
