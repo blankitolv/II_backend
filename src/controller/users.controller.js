@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 
 export async function loginUser(req, res) {
   const { email, password } = req.body;
-  console.log("PASE");
   if (!email || !password) {
     return res
       .status(400)
