@@ -6,7 +6,7 @@
 
 # E-commerce Backend API
 
-Backend para una aplicación de e-commerce construido con Node.js, Express y MongoDB, siguiendo una arquitectura profesional por capas.
+Backend para una aplicación de e-commerce construido con Node.js, Express y MongoDB, siguiendo una arquitectura por capas.
 
 ## Características Principales
 
