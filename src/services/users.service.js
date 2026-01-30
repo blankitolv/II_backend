@@ -1,8 +1,9 @@
-import UserRepository from "../repository/users.repository.js";
+// librerías de terceros
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { sendEmail } from "../services/mailing.service.js";
 
+// librerías propias
+import UserRepository from "../repository/users.repository.js";
+import { sendEmail } from "../services/mailing.service.js";
 import {
   generatePasswordResetToken,
   verifyPasswordResetToken,

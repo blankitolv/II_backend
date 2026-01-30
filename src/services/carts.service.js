@@ -1,11 +1,11 @@
-import CartRepository from "../repository/carts.repository.js";
-
-import TicketModel from "../models/tickets.models.js";
-
+// librerías de terceros
 import fs from "fs";
 import path from "path";
 import handlebars from "handlebars";
 
+// librerías propias
+import CartRepository from "../repository/carts.repository.js";
+import TicketModel from "../models/tickets.models.js";
 import { UTILS_DIRNAME } from "../utils/utils.utils.js";
 
 const __dirname = UTILS_DIRNAME;

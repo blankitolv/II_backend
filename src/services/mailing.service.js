@@ -1,3 +1,4 @@
+// librerías de terceros
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
