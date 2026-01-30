@@ -1,3 +1,5 @@
+// evento de espera al domcontent
+// para agregarle el evento listener al submit
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("form_create_product");
   if (form) {
