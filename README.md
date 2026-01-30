@@ -1,142 +1,79 @@
-# Primera Entrega - Ecommerce Backend con Autenticación y Autorización
+<img src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
+<img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white"/>
+<img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white"/>
+<img src="https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white"/>
+<img src="https://img.shields.io/badge/Handlebars%20js-f0772b?style=for-the-badge&logo=handlebarsdotjs&logoColor=black"/>
+<img src="https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white"/>
+<img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/>
+<img src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white"/>
 
-Este proyecto es la primera entrega del curso de backend, implementando un sistema de CRUD de usuarios junto con autenticación y autorización utilizando Passport y JWT en un proyecto de ecommerce.
+# E-commerce Backend API
 
-## Descripción
+Backend para una aplicación de e-commerce construido con Node.js, Express y MongoDB, siguiendo una arquitectura profesional por capas.
 
-El proyecto incluye:
+## Características Principales
 
-- Modelo de Usuario con campos requeridos
-- Encriptación de contraseñas con bcrypt
-- Estrategias de Passport para JWT
-- Sistema de login y registro
-- Endpoint `/api/sessions/current` para validar usuarios logueados
-- Vistas con Handlebars para login, registro y perfil de usuario
+- **Arquitectura:** Controller - Service - Repository (DAO).
+- **Autenticación:** JWT con cookies `httpOnly`.
+- **Autorización:** Basada en roles (`admin`, `user`).
+- **Carrito:** Persistente y único por usuario.
+- **Compra:** Generación de `Tickets` con manejo de stock.
+- **Productos:** Borrado lógico (`soft delete`) para mantener integridad histórica.
+- **Seguridad:** Recuperación de contraseña con tokens de 1 hora de expiración.
+- **Automatización:** Seeding inicial de base de datos con usuarios y productos.
 
-## Tecnologías Utilizadas
+## Tecnologías
 
-- **Node.js** con ES Modules
-- **Express.js** para el servidor web
-- **MongoDB** con Mongoose para la base de datos
-- **Passport.js** con estrategia JWT para autenticación
-- **bcrypt** para encriptación de contraseñas
-- **jsonwebtoken** para manejo de tokens JWT
-- **express-handlebars** para renderizado de vistas
-- **Bootstrap** para estilos en las vistas
+- **Backend:** Node.js, Express.js
+- **Base de Datos:** MongoDB, Mongoose, `mongoose-paginate-v2`
+- **Autenticación:** Passport.js (JWT), `bcrypt`
+- **Vistas:** Express Handlebars
+- **Otros:** Socket.io, Nodemailer, Multer, Dotenv, UUID
 
-## Instalación
+## Puesta en Marcha
 
-1. Clona el repositorio:
+1.  **Clonar y entrar al directorio:**
 
-   ```bash
-   git clone <url-del-repositorio>
-   cd primera_entrega
-   ```
+    ```bash
+    git clone <URL-DEL-REPOSITORIO>
+    cd II_backend
+    ```
 
-2. Instala las dependencias:
+2.  **Instalar dependencias:**
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
-3. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+3.  **Configurar `.env`:**
+    Crea un archivo `.env` en la raíz (`II_backend`) y complétalo.
+    _Nota: No se enviarán emails a cuentas `@example.com`._
 
-   ```
-      PORT=3132
-      MONGO_URL=mongodb://localhost:27017
-      DB_NAME=backend_dos
-      JWT_SECRET=unsecretosupersecreto
-   ```
+    ```dotenv
+    MONGO_URL=mongodb+srv://<user>:<pass>@cluster...
+    PORT=3132
+    JWT_SECRET=your_super_secret_jwt_key
+    COOKIE_SECRET=your_super_secret_cookie_key
+    SMTP_USER=tu_email@gmail.com
+    SMTP_PASS=tu_contraseña_de_aplicacion_de_gmail
+    ```
 
-4. Asegúrate de tener MongoDB corriendo en tu sistema.
+4.  **Iniciar servidor:**
+    ```bash
+    npm run dev
+    ```
 
-## Ejecución
+## Usuarios de Prueba (Seed)
 
-Para ejecutar el proyecto en modo desarrollo:
+Al iniciar por primera vez, se crearán los siguientes usuarios para facilitar las pruebas:
 
-```bash
-npm run dev
-```
+| Rol       | Email               | Contraseña         |
+| :-------- | :------------------ | :----------------- |
+| **Admin** | `admin@example.com` | `adminPassword123` |
+| **User**  | `user@example.com`  | `userPassword123`  |
 
-El servidor se iniciará en el puerto por defecto (generalmente 8080 o el configurado en el código 3000).
+## Documentación y Colección Postman
 
-## Estructura del Proyecto
+La documentación completa de la API, con ejemplos de uso, se encuentra en la carpeta `/documentation`. Abre `index.html` en tu navegador.
 
-```
-primera_entrega/
-├── index.js                    # Punto de entrada de la aplicación
-├── package.json                # Dependencias y scripts
-├── README.md                   # Este archivo
-├── public/                     # Archivos estáticos
-│   ├── assets/
-│   │   ├── img/
-│   │   └── styles/
-│   │       └── styles.css
-└── src/
-    ├── config/
-    │   ├── db.config.js        # Configuración de MongoDB
-    │   └── passport.config.js  # Configuración de Passport
-    ├── controller/
-    │   └── users.controller.js # Controladores de usuarios
-    ├── middleware/
-    │   └── passport.middleware.js # Middlewares de Passport
-    ├── models/
-    │   └── users.models.js     # Modelo de Usuario
-    ├── routes/
-    │   ├── session.router.js   # Rutas de sesiones (login, current)
-    │   ├── users.router.js     # Rutas de usuarios (CRUD)
-    │   └── views.router.js     # Rutas de vistas
-    ├── utils/
-    │   ├── jwt.utils.js        # Utilidades para JWT
-    │   └── utils.utils.js      # Utilidades generales
-    └── views/
-        ├── current.handlebars  # Vista del perfil de usuario
-        ├── login.handlebars    # Vista de login
-        ├── register.handlebars # Vista de registro
-        └── layouts/
-            └── main.handlebars # Layout principal
-```
-
-## Modelo de Usuario
-
-El modelo `User` incluye los siguientes campos:
-
-- `first_name`: String (requerido)
-- `last_name`: String (requerido)
-- `email`: String (requerido, único)
-- `age`: String (opcional)
-- `password`: String (requerido, encriptado con bcrypt)
-- `cart`: String (ID de referencia a Carts)
-- `role`: String (por defecto: 'user')
-
-## API Endpoints
-
-### Sesiones
-
-- `POST /api/sessions/login`: Inicia sesión y genera JWT
-- `GET /api/sessions/current`: Valida el JWT y devuelve datos del usuario
-- `GET /api/sessions/logout`: Cierra sesión
-
-### Usuarios
-
-- `POST /users/register`: Registra un nuevo usuario
-
-### Vistas
-
-- `GET /login`: Página de login
-- `GET /register`: Página de registro
-- `GET /current`: Página del perfil de usuario logueado
-
-## Autenticación y Autorización
-
-- **Registro**: Los usuarios se registran con nombre, apellido, email, contraseña y edad opcional. La contraseña se encripta con bcrypt.
-- **Login**: Los usuarios inician sesión con email y contraseña. Si son válidos, se genera un JWT que se almacena en una cookie firmada.
-- **Validación**: El endpoint `/api/sessions/current` valida el JWT y devuelve los datos del usuario.
-- **Protección**: Las rutas protegidas usan el middleware `passportCall('jwt')` para verificar el token.
-
-## Notas
-
-- El CRUD de usuarios está parcialmente implementado (solo registro). Para completar el CRUD, se necesitan endpoints para leer, actualizar y eliminar usuarios.
-- El campo `age` en el modelo está definido como String, pero según las consignas debería ser Number.
-- El campo `cart` es String, pero debería ser ObjectId con referencia al modelo Carts.
-- Las vistas usan Handlebars y Bootstrap para una interfaz básica.
+La colección de Postman para probar los endpoints está en `/documentation/postman`.
