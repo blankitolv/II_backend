@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Logic for adding products to the cart (from products page)
   const addToCartButtons = document.querySelectorAll(".add-to-cart");
   const productsCartContainer = document.getElementById("cart-container");
 
@@ -39,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Logic for deleting products from the cart (from cart page)
   const deleteFromCartButtons = document.querySelectorAll(
     ".delete-product-button",
   );
@@ -60,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
           );
 
           if (response.ok) {
-            // Remove the product li from the DOM
             const productContainer = document.querySelector(
               `[data-product-container="${productId}"]`,
             );
@@ -77,61 +74,62 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
-  }  // Logic for quantity updates in the cart (from cart page)
+  }
   const quantityInputs = document.querySelectorAll(".quantity-input");
-  
+
   if (cartViewContainer && quantityInputs.length > 0) {
     const userCartId = cartViewContainer.dataset.cartId;
-    quantityInputs.forEach(input => {
+    quantityInputs.forEach((input) => {
       input.addEventListener("change", async (event) => {
         const productId = event.target.dataset.productId;
         const newQuantity = event.target.value;
 
         try {
-          const response = await fetch(`/api/carts/${userCartId}/products/${productId}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
+          const response = await fetch(
+            `/api/carts/${userCartId}/products/${productId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ quantity: newQuantity }),
             },
-            body: JSON.stringify({ quantity: newQuantity })
-          });
+          );
 
           if (response.ok) {
             alert("Quantity updated successfully!");
-            // Optionally, you could update totals on the page here
           } else {
             const errorData = await response.json();
             alert(errorData.message || "Failed to update quantity.");
-            // Revert the input value to the previous state if the update fails
-            // This requires storing the old value, e.g., on focus
           }
         } catch (error) {
-          console.error('Error updating quantity:', error);
+          console.error("Error updating quantity:", error);
           alert("An error occurred.");
         }
       });
     });
   }
 
-  // Logic for the purchase button
   const purchaseButton = document.getElementById("purchase-button");
   if (cartViewContainer && purchaseButton) {
     const userCartId = cartViewContainer.dataset.cartId;
     purchaseButton.addEventListener("click", async () => {
       try {
         const response = await fetch(`/api/carts/${userCartId}/purchase`, {
-          method: 'POST',
+          method: "POST",
         });
 
         if (response.ok) {
-          alert("Purchase completed successfully! A confirmation email has been sent.");
+          alert(
+            "Purchase completed successfully! A confirmation email has been sent.",
+          );
           window.location.reload();
         } else {
           const errorData = await response.json();
           alert(errorData.message || "Failed to complete the purchase.");
         }
       } catch (error) {
-        console.error('Error during purchase:', error);
+        console.error("Error during purchase:", error);
         alert("An error occurred during the purchase process.");
       }
     });
