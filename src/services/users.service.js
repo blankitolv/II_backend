@@ -76,7 +76,6 @@ export default class UserService {
   async sendPasswordResetLink(email) {
     const user = await this.userRepository.findUserByEmail(email);
     if (!user) {
-      // No revelamos si el usuario existe o no por seguridad
       console.log(`Password reset requested for non-existent user: ${email}`);
       return;
     }
@@ -103,12 +102,12 @@ export default class UserService {
       throw new Error("User not found.");
     }
 
-    // Verificar que la nueva contraseña no sea la misma que la anterior
+    // se verifica que la password no sea igual a la anterior
     if (bcrypt.compareSync(newPassword, user.password)) {
       throw new Error("New password cannot be the same as the old password.");
     }
 
-    // Hashear y actualizar la nueva contraseña
+    // se hashea la nueva password
     const hashedPassword = bcrypt.hashSync(newPassword, 10);
     await this.userRepository.updateUser(user._id, {
       password: hashedPassword,
