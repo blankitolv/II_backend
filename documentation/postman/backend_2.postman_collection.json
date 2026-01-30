@@ -1,0 +1,734 @@
+{
+  "info": {
+    "_postman_id": "5bd83873-e9c6-4422-8975-50a134ba425e",
+    "name": "backend_2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "18302215",
+    "_collection_link": "https://go.postman.co/collection/18302215-5bd83873-e9c6-4422-8975-50a134ba425e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "create_user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"first_name\":\"lukitas\",\r\n    \"last_name\":\"veguita\",\r\n    \"email\":\"lucasvega2@gmail.com\",\r\n    \"password\":\"4401901\",\r\n    \"age\":18\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/users/register",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"user@example.com\",\r\n    \"password\":\"userPassword123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/sessions/login",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "sessions",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "userLogin",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"user@example.com\",\r\n    \"password\":\"userPassword123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "localhost:3132/api/sessions/login",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3132",
+                  "path": [
+                    "api",
+                    "sessions",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "currentUser=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2JhMDUzZmYxMTNlNjU5NTcxOGRhNSIsImVtYWlsIjoibHVjYXN2ZWdhMkBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzY5NzEwNzI2LCJleHAiOjE3Njk3OTcxMjZ9.85aj3ZRqprYHTqc60FEzNFFkg9nDYSXIFtbo1dmGQcE.elF9NFyURx3d%2BWA05txs8DIyTvly0p5oC5sRXRg8r0E; Path=/; HttpOnly"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "72"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"48-UmRpCf81S7mbWgd88BSYB7Rt6pI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 18:18:46 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Login successful.\",\n    \"redirect\": \"/current\"\n}"
+            },
+            {
+              "name": "adminLogin",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"admin@example.com\",\r\n    \"password\":\"adminPassword123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "localhost:3132/api/sessions/login",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3132",
+                  "path": [
+                    "api",
+                    "sessions",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Set-Cookie",
+                  "value": "currentUser=s%3AeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2I5MGFkODJhNGJjYzAzYjliMThlMSIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Njk3MTA3NjYsImV4cCI6MTc2OTc5NzE2Nn0.Z0uspI3mPvNPwLcKR102CHTrx8aq9xOmBbjMGjL72E0.tzB65BY6lmRe%2FZzhQsjdKvWhBx0knqwOQjW4DVvm7N8; Path=/; HttpOnly"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "72"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"48-UmRpCf81S7mbWgd88BSYB7Rt6pI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 29 Jan 2026 18:19:26 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"success\",\n    \"message\": \"Login successful.\",\n    \"redirect\": \"/current\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "current",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fist_name\":\"lukitas\",\r\n    \"last_name\":\"veguita\",\r\n    \"email\":\"lucasvega2@example.com\",\r\n    \"password\":\"4401901\",\r\n    \"age\":18\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/sessions/current",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "sessions",
+                "current"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "forgot-password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"lucasvega2@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/sessions/forgot-password",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "sessions",
+                "forgot-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reset-password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2FzdmVnYTJAZ21haWwuY29tIiwiaWF0IjoxNzY5NzMxODk3LCJleHAiOjE3Njk3MzU0OTd9.jHVGlDaoFe8JHB-w_RfYdV2heICPWpj6KNlY95I5dzw\",\r\n    \"password\":\"alfajorcito\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/sessions/reset-password",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "sessions",
+                "reset-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "current Copy",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fist_name\":\"lukitas\",\r\n    \"last_name\":\"veguita\",\r\n    \"email\":\"lucasvega2@example.com\",\r\n    \"password\":\"4401901\",\r\n    \"age\":18\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/sessions/current",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "sessions",
+                "current"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fist_name\":\"lukitas\",\r\n    \"last_name\":\"veguita\",\r\n    \"email\":\"lucasvega2@example.com\",\r\n    \"password\":\"4401901\",\r\n    \"age\":18\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/sessions/logout",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "sessions",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateUser",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"last_name\":\"vega\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/users/697bc36bbd45fbfcb5572532",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "users",
+                "697bc36bbd45fbfcb5572532"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "cart",
+      "item": [
+        {
+          "name": "getCartById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3132/api/carts/697bad3120add5199d9ee83b",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "carts",
+                "697bad3120add5199d9ee83b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "addProductCart",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/carts/697bad3120add5199d9ee83b/product/697b907287488472f03c2c2a",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "carts",
+                "697bad3120add5199d9ee83b",
+                "product",
+                "697b907287488472f03c2c2a"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteProductFromCart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/carts/697bad3120add5199d9ee83b/product/697b907287488472f03c2c29",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "carts",
+                "697bad3120add5199d9ee83b",
+                "product",
+                "697b907287488472f03c2c29"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteCart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:3132/api/carts/697bad3120add5199d9ee83b",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "carts",
+                "697bad3120add5199d9ee83b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateProductQuantity",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3132/api/carts/697bad3120add5199d9ee83b/products/697b907287488472f03c2c2a",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "carts",
+                "697bad3120add5199d9ee83b",
+                "products",
+                "697b907287488472f03c2c2a"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "admin_role",
+          "item": [
+            {
+              "name": "createProduct",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "title",
+                      "value": "newShark2",
+                      "type": "text"
+                    },
+                    {
+                      "key": "description",
+                      "value": "new pad shark2",
+                      "type": "text"
+                    },
+                    {
+                      "key": "code",
+                      "value": "2321223",
+                      "type": "text"
+                    },
+                    {
+                      "key": "price",
+                      "value": "32577",
+                      "type": "text"
+                    },
+                    {
+                      "key": "stock",
+                      "value": "5",
+                      "type": "text"
+                    },
+                    {
+                      "key": "category",
+                      "value": "pad",
+                      "type": "text"
+                    },
+                    {
+                      "key": "thumbnails",
+                      "type": "file",
+                      "src": "/C:/Users/Blankito/Downloads/hollow-jpg-e62c197d90872ef9d217611659204370-640-0.webp"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "localhost:3132/api/products",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3132",
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete_product",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "localhost:3132/api/products/697b98cd59d2e7c135a494b0",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3132",
+                  "path": [
+                    "api",
+                    "products",
+                    "697b98cd59d2e7c135a494b0"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "updateProduct",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"price\": 1010101010,\r\n    \"title\": \"updated\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "localhost:3132/api/products/697b98ae59d2e7c135a494aa",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3132",
+                  "path": [
+                    "api",
+                    "products",
+                    "697b98ae59d2e7c135a494aa"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "getAllProducts[0]",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3132/api/products",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllProducts[1]",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3132/api/products?page=2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getProductById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3132/api/products/697b907287488472f03c2c29",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "products",
+                "697b907287488472f03c2c29"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ticket",
+      "item": [
+        {
+          "name": "purchaseCart",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "localhost:3132/api/carts/697bad3120add5199d9ee83b/purchase",
+              "host": [
+                "localhost"
+              ],
+              "port": "3132",
+              "path": [
+                "api",
+                "carts",
+                "697bad3120add5199d9ee83b",
+                "purchase"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
