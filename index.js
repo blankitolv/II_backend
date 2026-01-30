@@ -13,12 +13,14 @@ import {
   BOOTSTRAPDIR,
   BOOTSTRAPICONDIR,
   consoleColors,
+  documentacionURL,
+  ROOT_PATH,
 } from "./src/utils/utils.utils.js";
 import { connectMongo } from "./src/config/db.config.js";
 import initializePassport from "./src/config/passport.config.js";
 import { seedDatabase } from "./src/seed/seed.js";
 
-// routes
+// import routes
 import apiUsersRouter from "./src/routes/users.router.js";
 import viewsRouter from "./src/routes/views.router.js";
 import apiSessionsRouter from "./src/routes/session.router.js";
@@ -49,6 +51,7 @@ Sockets(socketServer);
 
 // handlebars
 const hbs = handlebars.create({
+  // funciones propias de handlebars
   helpers: {
     dump: (context) => JSON.stringify(context, " ", "  "),
     eq: (a, b) => a === b,
@@ -84,7 +87,7 @@ connectMongo()
     await seedDatabase();
     httpServer.listen(PORT, () => {
       console.log(`🛡️ http://localhost:${PORT}`);
-      console.log(`🛡️ http://localhost:${PORT}/login`);
+      consoleColors("cyan", "Documentación disponible en:", documentacionURL());
     });
   })
   .catch((error) => {

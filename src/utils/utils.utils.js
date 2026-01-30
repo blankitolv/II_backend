@@ -5,11 +5,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const UTILS_DIRNAME = path.dirname(__filename);
-// Esto te da la raíz real del proyecto:
+
 export const ROOT_PATH = path.join(__dirname, "..", "..");
 
-// Ruta a node_modules/bootstrap/dist
-// const BOOTSTRAPDIR = path.join(ROOT_PATH, "node_modules/bootstrap/dist");
 export const BOOTSTRAPDIR = path.join(
   process.cwd(),
   "node_modules",
@@ -56,4 +54,17 @@ export const consoleColors = (color = "reset", ...args) => {
 
   const colorCode = colores.get(color) || colores.get("reset");
   console.log(colorCode, ...args, colores.get("reset"));
+};
+
+export const documentacionURL = () => {
+  const documentationPATH = path.join(ROOT_PATH, "documentation");
+  const pageDocumentation = path.join(ROOT_PATH, "documentation", "index.html");
+  const postmanCollection = path.join(
+    ROOT_PATH,
+    "documentation",
+    "postman",
+    "backend_2.postman_collection.json",
+  );
+
+  return `\n 📄${documentationPATH}\n 📄${pageDocumentation}\n 📄${postmanCollection}\n `;
 };
