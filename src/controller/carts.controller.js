@@ -95,6 +95,8 @@ export const purchaseCart = async (req, res) => {
   const { cid } = req.params;
   const userId = req.user._id;
   const purchaserEmail = req.user.email;
+  console.log("CID: ", cid);
+  console.log("UserID: ", userId);
 
   try {
     const { ticket, productsNotPurchased } = await cartService.purchaseCart(

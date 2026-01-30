@@ -2,6 +2,10 @@ import CartRepository from "../repository/carts.repository.js";
 
 import TicketModel from "../models/tickets.models.js";
 
+import fs from "fs";
+import path from "path";
+import handlebars from "handlebars";
+
 import { UTILS_DIRNAME } from "../utils/utils.utils.js";
 
 const __dirname = UTILS_DIRNAME;
@@ -95,10 +99,22 @@ export default class CartService {
       throw new Error("Product not found");
     }
 
-    // valida el stock antes de agregar al carrito
-    if (!product.validate_quantity_stock(quantity)) {
-      throw new Error("Insufficient stock");
+    const cart = await this.cartRepository.getCartById(cartId);
+    if (!cart) {
+      throw new Error("Cart not found");
     }
+
+    const productInCart = cart.products.find(
+      (item) => item.product._id.toString() === productId,
+    );
+
+    const newTotalQuantity =
+      (productInCart ? productInCart.quantity : 0) + quantity;
+
+    if (!product.validate_quantity_stock(newTotalQuantity)) {
+      throw new Error("Insufficient stock for the requested quantity.");
+    }
+
     return this.cartRepository.addProductToCart(cartId, productId, quantity);
   }
 
