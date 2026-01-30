@@ -1,15 +1,16 @@
+// librerías de terceros
 import { Router } from "express";
+import jwt from "jsonwebtoken";
+
+// librerías propias
+import { productService, cartService, userService } from "../services/index.js";
+
+// middlewares
 import {
   passportCall,
   isLoggedIn,
   authorize,
 } from "../middleware/passport.middleware.js";
-import { productService, cartService, userService } from "../services/index.js";
-
-// import ProductService from "../services/products.service.js";
-// import CartService from "../services/carts.service.js";
-// import UserService from "../services/users.service.js";
-import jwt from "jsonwebtoken";
 
 const router = Router();
 

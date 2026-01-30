@@ -1,4 +1,7 @@
+// librerías de terceros
 import { Router } from "express";
+
+// librerías propias
 import {
   getAllProducts,
   getProductById,
@@ -7,6 +10,7 @@ import {
   deleteProduct,
 } from "../controller/products.controller.js";
 
+// middlewares
 import { validateMongoId } from "../middleware/validation.middleware.js";
 import { passportCall, authorize } from "../middleware/passport.middleware.js";
 import { uploader } from "../utils/multer.utils.js";

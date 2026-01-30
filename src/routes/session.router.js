@@ -1,10 +1,14 @@
+// librerías de terceros
 import { Router } from "express";
 import passport from "passport";
+// librerías propias
 import {
   loginUser,
   handleForgotPassword,
   handleResetPassword,
 } from "../controller/users.controller.js";
+
+// DTOs
 import UserDTO from "../dto/user.dto.js";
 
 const router = Router();
