@@ -15,7 +15,7 @@ router.post("/reset-password", handleResetPassword);
 // Login: genera el JWT
 router.post("/login", loginUser);
 
-// Current: valida el JWT y devuelve req.user con el DTO
+// Ruta para obtener el usuario actual autenticado
 router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
