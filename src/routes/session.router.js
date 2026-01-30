@@ -27,7 +27,7 @@ router.get(
     });
   },
 );
-
+// ruta de logout
 router.post("/logout", (req, res) => {
   res.clearCookie("currentUser");
   return res.status(200).json({
