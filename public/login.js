@@ -4,6 +4,7 @@ const submitButton = document.getElementById("submitButton");
 const loginForm = document.getElementById("loginForm");
 const errorMessageContainer = document.querySelector(".alert.alert-danger");
 
+// función para habilitar o no el botón de submit
 function checkInputs() {
   const emailValue = emailInput.value.trim();
   const passwordValue = passwordInput.value.trim();
@@ -16,6 +17,7 @@ passwordInput.addEventListener("input", checkInputs);
 
 window.addEventListener("load", checkInputs);
 
+// se agrega el evento submit al formulario de login
 if (loginForm) {
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
