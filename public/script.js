@@ -1,13 +1,13 @@
 const socket = io();
 
 const realtime_list_products = document.getElementById(
-  "realtime_list_products"
+  "realtime_list_products",
 );
 
 const addProduct = (producto) => {
   if (!producto.id || !producto.code) {
-    alert("producto mal formado")
-    return
+    alert("producto mal formado");
+    return;
   }
   console.log(".. producto", producto);
   const div = document.createElement("div");
@@ -41,7 +41,7 @@ const addProduct = (producto) => {
 
       if (!res.ok) {
         alert("No se pudo eliminar el producto");
-        return
+        return;
       }
     } catch (err) {
       console.error("Error:", err);
@@ -52,17 +52,17 @@ const addProduct = (producto) => {
 
 socket.emit("ClientNeedProducts", "dame los productos");
 
-socket.on("del_product", async(producto) =>{
-  console.log("SE ELIMINO UN PRODUCTO: ",producto)
+socket.on("del_product", async (producto) => {
+  console.log("SE ELIMINO UN PRODUCTO: ", producto);
   const card = document.getElementById(producto);
   if (card) {
     card.remove();
     console.log(`Producto con ID ${producto} eliminado del DOM`);
   }
 });
-socket.on("new_product", async(producto) =>{
-  console.log("evento2: ",producto.product)
-  addProduct(producto.product)
+socket.on("new_product", async (producto) => {
+  console.log("evento2: ", producto.product);
+  addProduct(producto.product);
 });
 
 socket.on("serverSendProducts", async (productos) => {

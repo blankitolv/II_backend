@@ -35,14 +35,13 @@ if (loginForm) {
       const result = await response.json();
 
       if (errorMessageContainer) {
-        errorMessageContainer.style.display = "none"; // Ocultar errores anteriores
+        errorMessageContainer.style.display = "none";
       }
 
       if (response.ok && result.status === "success") {
         // Login exitoso, redirigir al usuario
         window.location.href = result.redirect;
       } else {
-        // Mostrar error del servidor
         if (errorMessageContainer) {
           errorMessageContainer.textContent =
             result.message || "Error desconocido al iniciar sesión.";

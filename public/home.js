@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "DELETE",
         });
         if (res.ok) {
-          // Podés hacer un alert, recargar la página o eliminar el card del DOM
           document.getElementById(id).remove();
           console.log(`Producto ${id} eliminado`);
         } else {

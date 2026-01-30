@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("form_create_product");
-
   if (form) {
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -17,9 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (response.ok) {
           alert("Producto creado con éxito");
-          form.reset(); // Limpia el formulario
+          form.reset();
         } else {
-          // Si el servidor devuelve un JSON con un mensaje de error
           alert(`Error: ${result.message || "No se pudo crear el producto."}`);
         }
       } catch (error) {

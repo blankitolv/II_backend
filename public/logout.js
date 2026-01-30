@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (logoutLink) {
     logoutLink.addEventListener("click", async (event) => {
-      event.preventDefault(); // Prevenir la navegación del enlace
+      event.preventDefault();
 
       try {
         const response = await fetch("/api/sessions/logout", {
@@ -11,14 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: {
             "Content-Type": "application/json",
           },
-          // No es necesario un body para el logout, pero se incluye por consistencia si fuera necesario
-          body: JSON.stringify({}), 
+          body: JSON.stringify({}),
         });
 
         const result = await response.json();
 
         if (response.ok && result.status === "success") {
-          // El cliente se encarga de la redirección
           window.location.href = result.redirect;
         } else {
           alert(result.message || "Failed to log out.");
