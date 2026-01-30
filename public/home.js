@@ -1,3 +1,5 @@
+// evento de espera al domcontent
+// para agregarle el evento click a los productos
 document.addEventListener("DOMContentLoaded", () => {
   const botonesEliminar = document.querySelectorAll(".delete-button");
 
